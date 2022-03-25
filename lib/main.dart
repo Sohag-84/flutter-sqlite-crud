@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sqlite/models/contact.dart';
 
 
 const darkBlue = Color(0xFF486579);
@@ -26,6 +27,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   final _formKey = GlobalKey<FormState>();
+  final Contact _contact = Contact(1,"sohag","123445");
+  final TextEditingController _nameController =  TextEditingController();
+  final TextEditingController _numberController =  TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,11 +67,15 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             TextFormField(
+              onSaved: (val)=>setState(()=>_contact.mobile= val! ),//for get user value
+              //controller: _nameController,
               decoration: const InputDecoration(
                 hintText: "Enter your full name"
               ),
             ),
             TextFormField(
+              onSaved: (val)=>setState(()=>_contact.mobile= val! ),
+              //controller: _numberController,
               decoration: const InputDecoration(
                   hintText: "Enter your mobile number"
               ),
@@ -76,7 +84,9 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(10),
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  return _onAddButton();
+                },
                 style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -94,4 +104,11 @@ class _HomePageState extends State<HomePage> {
 
     );
   }
+  _onAddButton() {
+    var form = _formKey.currentState;
+    form!.save();
+    print("skdfsd = ${_contact.mobile}");/
+  }
 }
+
+

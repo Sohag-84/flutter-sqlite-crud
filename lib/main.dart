@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomePage();
+    return const HomePage();
 
   }
 }
@@ -24,6 +24,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +43,55 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            mainAxisAlignment: MainAxisAlignment.start,
+            children:  [
+              _form(),
+              _list()
             ],
           ),
         ),
       ),
+    );
+  }
+
+  _form(){
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 30),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: "Enter your full name"
+              ),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                  hintText: "Enter your mobile number"
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
+                child: Text("Add".toUpperCase()),
+              )
+            )
+          ],
+        ),
+      ),
+    );
+  }
+  _list(){
+    return Container(
+
     );
   }
 }

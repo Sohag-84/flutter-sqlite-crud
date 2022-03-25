@@ -27,9 +27,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   final _formKey = GlobalKey<FormState>();
-  final Contact _contact = Contact(1,"sohag","123445");
-  final TextEditingController _nameController =  TextEditingController();
-  final TextEditingController _numberController =  TextEditingController();
+  final Contact _contact = Contact(1,"sohag","1234567");
+  // final TextEditingController _nameController =  TextEditingController();
+  // final TextEditingController _numberController =  TextEditingController();
+  bool isValidate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -67,18 +68,27 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             TextFormField(
-              onSaved: (val)=>setState(()=>_contact.mobile= val! ),//for get user value
+              onSaved: (val)=>setState(()=>_contact.name= val! ),//for get user value
               //controller: _nameController,
-              decoration: const InputDecoration(
-                hintText: "Enter your full name"
-              ),
+              decoration: const InputDecoration(hintText: "Enter your full name"),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
             ),
             TextFormField(
               onSaved: (val)=>setState(()=>_contact.mobile= val! ),
               //controller: _numberController,
-              decoration: const InputDecoration(
-                  hintText: "Enter your mobile number"
-              ),
+              decoration: const InputDecoration(hintText: "Enter your mobile number"),
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value == null || value.isEmpty || value.length<11) {
+                  return 'At least 11 character is required';
+                }
+                return null;
+              },
             ),
             Container(
               padding: const EdgeInsets.all(10),
@@ -106,8 +116,12 @@ class _HomePageState extends State<HomePage> {
   }
   _onAddButton() {
     var form = _formKey.currentState;
-    form!.save();
-    print("skdfsd = ${_contact.mobile}");/
+    if(form!.validate()){
+      form.save();
+      print(_contact.name);
+      print(_contact.mobile);
+    }
+
   }
 }
 
